@@ -56,11 +56,10 @@ saas-starter-qris/
 
 Anda bisa mendapatkan source code lengkap siap pakai, file `.env.example`, dan hak lisensi komersial seumur hidup:
 
-👉 **[Beli Source Code di Payhip ($19 / Sekali Bayar)](https://payhip.com)**
+- 🇮🇩 **[Beli di Lynk.id (QRIS / Bank Transfer / E-Wallet)](https://lynk.id)**
+- 🌍 **[Beli di Payhip (PayPal / Kartu Kredit Global)](https://payhip.com)**
 
-*(File `.zip` langsung terkirim otomatis ke email Anda seketika setelah pembayaran).*
-
----
+*(File `.zip` langsung terkirim otomatis dan dapat diunduh seketika setelah pembayaran).*
 
 ## 🛠️ Panduan Instalasi Cepat (Bagi Pemilik Lisensi)
 
