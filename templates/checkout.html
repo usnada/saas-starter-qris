@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - {{ plan.name }}{% endblock %}
+
+{% block content %}
+<div class="checkout-container">
+    <div class="card checkout-card">
+        <h2>Konfirmasi Pembelian</h2>
+        <p class="subtitle">Selesaikan pembayaran untuk mengaktifkan akun dan fitur SaaS Anda.</p>
+
+        <div class="order-summary">
+            <div class="summary-item">
+                <span>Paket Dipilih:</span>
+                <strong>{{ plan.name }}</strong>
+            </div>
+            <div class="summary-item">
+                <span>Metode Pembayaran:</span>
+                <span class="badge-sm">QRIS Semua Bank & E-Wallet</span>
+            </div>
+            <div class="summary-item total">
+                <span>Total Pembayaran:</span>
+                <strong class="highlight-price">Rp {{ "{:,}".format(plan.price).replace(',', '.') }}</strong>
+            </div>
+        </div>
+
+        <form method="POST" class="checkout-form">
+            <div class="form-group">
+                <label for="email">Alamat Email Anda (Akses Akun)</label>
+                <input type="email" id="email" name="email" required placeholder="nama@email.com" value="{{ session.get('user_email', '') }}" class="form-input">
+                <small class="form-help">Link aktivasi dan akses dashboard akan dikaitkan ke email ini.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary full-width">Lanjut ke Pembayaran QRIS &rarr;</button>
+        </form>
+
+        <div class="secure-badge">
+            🔒 Pembayaran aman diproses langsung via QRIS Nasional & Pakasir
+        </div>
+    </div>
+</div>
+{% endblock %}

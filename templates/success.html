@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Pembayaran Berhasil!{% endblock %}
+
+{% block content %}
+<div class="checkout-container">
+    <div class="card success-card text-center">
+        <div class="success-icon">🎉</div>
+        <h2>Pembayaran Berhasil!</h2>
+        <p class="subtitle">Terima kasih, akun Anda kini telah aktif dengan akses penuh.</p>
+
+        {% if order %}
+        <div class="order-summary text-left">
+            <div class="summary-item">
+                <span>Order ID:</span>
+                <code>{{ order.order_id }}</code>
+            </div>
+            <div class="summary-item">
+                <span>Paket:</span>
+                <strong>{{ order.plan_name }}</strong>
+            </div>
+            <div class="summary-item">
+                <span>Status:</span>
+                <span class="badge badge-success">Lunas / Completed</span>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="mt-4">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Buka Dashboard Member &rarr;</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

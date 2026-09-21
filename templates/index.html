@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <span class="badge">🚀 Boilerplate Flask + QRIS Otomatis</span>
+    <h1>Luncurkan SaaS Lokal Anda Dalam Hitungan Jam</h1>
+    <p class="subtitle">Template lengkap Python Flask siap produksi dengan otentikasi pengguna, database SQLite instan, dan integrasi pembayaran QRIS Pakasir tanpa ribet.</p>
+    
+    <div class="hero-actions">
+        <a href="#pricing" class="btn btn-primary">Lihat Paket & Mulai</a>
+        <a href="https://github.com/usnada" target="_blank" class="btn btn-secondary">Dokumentasi</a>
+    </div>
+</section>
+
+<section id="features" class="features-grid">
+    <div class="card feature-card">
+        <div class="icon">💳</div>
+        <h3>QRIS Otomatis</h3>
+        <p>Integrasi langsung dengan gateway Pakasir. Bayar via BCA, Mandiri, GoPay, OVO, atau ShopeePay seketika aktif.</p>
+    </div>
+    <div class="card feature-card">
+        <div class="icon">🔒</div>
+        <h3>Otentikasi & Database</h3>
+        <p>Sistem sesi dan manajemen database SQLite ringan tanpa konfigurasi server yang membingungkan.</p>
+    </div>
+    <div class="card feature-card">
+        <div class="icon">⚡</div>
+        <h3>Siap Deploy VPS</h3>
+        <p>Dilengkapi konfigurasi Gunicorn, systemd, dan Nginx reverse proxy untuk deploy kilat ke Ubuntu VPS.</p>
+    </div>
+</section>
+
+<section id="pricing" class="pricing-section">
+    <div class="section-header">
+        <h2>Pilih Paket Langganan</h2>
+        <p>Dapatkan akses instan ke source code dan dashboard SaaS sekarang juga.</p>
+    </div>
+
+    <div class="pricing-grid">
+        {% for plan_id, plan in plans.items() %}
+        <div class="card pricing-card {% if plan_id == 'pro' %}popular{% endif %}">
+            {% if plan_id == 'pro' %}<div class="ribbon">Paling Populer</div>{% endif %}
+            <h3>{{ plan.name }}</h3>
+            <div class="price">
+                <span class="currency">Rp</span>
+                <span class="amount">{{ "{:,}".format(plan.price).replace(',', '.') }}</span>
+                <span class="period">/sekali bayar</span>
+            </div>
+            <ul class="feature-list">
+                {% for f in plan.features %}
+                <li>✓ {{ f }}</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ url_for('checkout', plan_id=plan_id) }}" class="btn {% if plan_id == 'pro' %}btn-primary{% else %}btn-secondary{% endif %} full-width">Beli Sekarang</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

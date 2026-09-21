@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Member{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Dashboard Anggota 🚀</h1>
+        <p>Selamat datang, <b>{{ user_email }}</b>. Status langganan Anda saat ini: <span class="badge badge-success">Aktif</span></p>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="card stat-card">
+            <h3>Akses Proyek</h3>
+            <div class="stat-value">Unlimited</div>
+            <p>Anda bebas membuat proyek baru tanpa batas limit.</p>
+        </div>
+        <div class="card stat-card">
+            <h3>Download Template</h3>
+            <div class="stat-value">v1.0.0</div>
+            <p>Source code terlengkap siap unduh kapan saja.</p>
+        </div>
+        <div class="card stat-card">
+            <h3>Dukungan Teknis</h3>
+            <div class="stat-value">Aktif</div>
+            <p>Bantuan tanya-jawab teknis prioritas via komunitas.</p>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <h3>Langkah Selanjutnya: Kustomisasi Kode Anda</h3>
+        <ol class="step-list">
+            <li><b>Ubah Branding:</b> Edit teks dan logo di berkas <code>templates/base.html</code>.</li>
+            <li><b>Hubungkan API Pakasir Milik Anda:</b> Daftarkan akun di <a href="https://pakasir.id" target="_blank">Pakasir.id</a> lalu masukkan <code>PAKASIR_SLUG</code> dan <code>PAKASIR_API_KEY</code> di <code>.env</code>.</li>
+            <li><b>Pasang Webhook URL:</b> Di dashboard Pakasir, masukkan URL webhook: <code>https://domain-anda.com/payment/webhook</code>.</li>
+            <li><b>Deploy ke VPS:</b> Jalankan script gunicorn dan pasang reverse proxy Nginx (panduan lengkap ada di <code>README.md</code>).</li>
+        </ol>
+    </div>
+</div>
+{% endblock %}

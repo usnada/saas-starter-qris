@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Masuk ke Dashboard{% endblock %}
+
+{% block content %}
+<div class="checkout-container">
+    <div class="card checkout-card">
+        <h2>Masuk ke Akun Anda</h2>
+        <p class="subtitle">Akses instan dashboard anggota menggunakan email terdaftar.</p>
+
+        <form method="POST" class="checkout-form">
+            <div class="form-group">
+                <label for="email">Alamat Email Pembelian</label>
+                <input type="email" id="email" name="email" required placeholder="nama@email.com" class="form-input">
+                <small class="form-help">Gunakan email yang Anda pakai saat melakukan pembayaran QRIS.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary full-width">Masuk ke Dashboard &rarr;</button>
+        </form>
+
+        <div class="text-center mt-4">
+            <p>Belum berlangganan? <a href="{{ url_for('index') }}#pricing">Pilih Paket Sekarang</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

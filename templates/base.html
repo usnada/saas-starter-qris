@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SaaS Starter Kit Indonesia{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="{{ url_for('index') }}" class="logo">⚡ SaaS<b>Kita</b></a>
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}">Beranda</a>
+                {% if session.get('user_email') %}
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('logout') }}" class="btn-sm btn-outline">Keluar ({{ session.get('user_email') }})</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn-sm btn-outline">Masuk</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SaaS Starter Kit Indonesia. Siap Pakai &bull; Terintegrasi Pakasir QRIS.</p>
+        </div>
+    </footer>
+</body>
+</html>
