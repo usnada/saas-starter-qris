@@ -1,14 +1,26 @@
 # ⚡ SaaS Starter Kit Indonesia (Flask + Pakasir QRIS)
 
-Boilerplate SaaS lengkap siap produksi berbasis **Python Flask**, terintegrasi dengan **Payment Gateway QRIS Pakasir**, otentikasi sesi, dan manajemen database SQLite ringan. 
+![SaaS Starter Kit Indonesia Cover](https://usnada.com/product_cover.png)
 
-Dirancang khusus bagi developer, solo founder, dan kreator digital yang ingin meluncurkan produk SaaS berbayar di pasar Indonesia dalam hitungan jam tanpa harus membangun sistem pembayaran dari nol.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Online-brightgreen?style=for-the-badge&logo=googlechrome)](https://usnada.com/demo-saas/)
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python)](https://python.org)
+[![License](https://img.shields.io/badge/License-Commercial%20Ready-orange?style=for-the-badge)](https://payhip.com)
+
+**Luncurkan Produk SaaS Lokal Anda Dalam Hitungan Jam, Bukan Minggu!**
+
+Boilerplate SaaS lengkap siap produksi berbasis **Python Flask**, terintegrasi dengan **Payment Gateway QRIS Pakasir**, otentikasi sesi anggota, dan manajemen database SQLite ringan tanpa ribet.
+
+---
+
+## 🔗 Coba Live Demo
+Akses demo langsung di browser:
+👉 **[https://usnada.com/demo-saas/](https://usnada.com/demo-saas/)**
 
 ---
 
 ## ✨ Fitur Utama
 
-- 💳 **Pembayaran QRIS Otomatis:** Integrasi instan dengan Pakasir (BCA, Mandiri, BRI, GoPay, OVO, ShopeePay, Dana).
+- 💳 **Pembayaran QRIS Otomatis:** Integrasi instan dengan Pakasir (BCA, Mandiri, BRI, BNI, GoPay, OVO, ShopeePay, Dana).
 - 🔄 **Webhook Verifikasi Real-Time:** Status pesanan langsung menjadi `completed` seketika saat pembeli scan QRIS.
 - 🔒 **Sistem Sesi & Akses Anggota:** Membatasi akses `/dashboard` hanya untuk pembeli yang memiliki transaksi aktif.
 - 🗄️ **Zero-Config Database:** Menggunakan SQLite bawaan Python, tidak perlu install server MySQL/PostgreSQL tambahan.
@@ -26,7 +38,7 @@ saas-starter-qris/
 ├── pakasir.py            # Helper URL generator & verifikasi webhook Pakasir
 ├── requirements.txt      # Dependensi Python
 ├── .env.example          # Contoh variabel lingkungan
-├── database.sqlite       # Database SQLite lokal (dibuat otomatis)
+├── PANDUAN_PEMBELI.txt   # Panduan instalasi cepat bagi pembeli
 ├── static/
 │   └── style.css         # Styling modern dark mode
 └── templates/
@@ -40,82 +52,41 @@ saas-starter-qris/
 
 ---
 
-## 🛠️ Panduan Instalasi Cepat
+## 🛒 Dapatkan Source Code Lengkap
 
-### 1. Clone & Setup Environment
-```bash
-git clone https://github.com/username/saas-starter-qris.git
-cd saas-starter-qris
+Anda bisa mendapatkan source code lengkap siap pakai, file `.env.example`, dan hak lisensi komersial seumur hidup:
 
-# Buat virtual environment
-python3 -m venv venv
-source venv/bin/activate
+👉 **[Beli Source Code di Payhip ($19 / Sekali Bayar)](https://payhip.com)**
 
-# Install dependensi
-pip install -r requirements.txt
-```
-
-### 2. Konfigurasi Variabel Lingkungan (`.env`)
-Salin file `.env.example` menjadi `.env`:
-```bash
-cp .env.example .env
-```
-
-Buka dan sesuaikan nilainya:
-```ini
-SECRET_KEY=kunci_rahasia_acak_yang_panjang
-PORT=5000
-DEBUG=True
-
-# Dapatkan dari dashboard https://pakasir.id
-PAKASIR_SLUG=proyek-saas-anda
-PAKASIR_API_KEY=api_key_dari_pakasir
-PAKASIR_BASE_URL=https://app.pakasir.com/pay
-
-APP_URL=http://localhost:5000
-```
-
-### 3. Jalankan Aplikasi Lokal
-```bash
-python3 app.py
-```
-Buka browser di `http://localhost:5000`.
+*(File `.zip` langsung terkirim otomatis ke email Anda seketika setelah pembayaran).*
 
 ---
 
-## 🔗 Menghubungkan Webhook Pakasir
+## 🛠️ Panduan Instalasi Cepat (Bagi Pemilik Lisensi)
 
-1. Masuk ke dashboard [Pakasir.id](https://pakasir.id).
-2. Di pengaturan proyek Anda, masukkan **Webhook URL**:
-   `https://domain-anda.com/payment/webhook`
-3. Setiap kali transaksi QRIS berhasil, server Pakasir akan mengirimkan payload JSON ke endpoint ini dan sistem secara otomatis mengaktifkan status akun pembeli.
+1. **Ekstrak & Install Dependensi:**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
 
----
+2. **Setup File `.env`:**
+   ```bash
+   cp .env.example .env
+   ```
+   Isi `PAKASIR_SLUG` dan `PAKASIR_API_KEY` dari dashboard [Pakasir.id](https://pakasir.id).
 
-## 🚀 Panduan Deploy ke VPS (Ubuntu + Nginx)
-
-Jalankan server produksi menggunakan Gunicorn:
-```bash
-gunicorn -w 3 -b 127.0.0.1:5000 app:app
-```
-
-Contoh konfigurasi Nginx reverse proxy:
-```nginx
-server {
-    server_name saas-anda.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:5000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
+3. **Jalankan Aplikasi:**
+   ```bash
+   python3 app.py
+   ```
+   Buka `http://localhost:5000` di browser Anda.
 
 ---
 
 ## 📄 Lisensi
 
-MIT License. Bebas digunakan untuk keperluan komersial, personal, maupun sebagai fondasi startup SaaS Anda.
+Lisensi Komersial: Bebas digunakan untuk membangun aplikasi SaaS pribadi maupun proyek klien tanpa batas. Dilarang mendistribusikan atau menjual ulang source code mentah ini sebagai produk template di platform lain.
+
+Dibuat dengan ❤️ oleh [I Ketut Usnada](https://usnada.com)

@@ -1,0 +1,63 @@
+# ⚡ PANDUAN MEMULAI CEPAT (QUICK START)
+# SaaS Starter Kit Indonesia (Flask + Pakasir QRIS)
+
+Halo! Terima kasih telah membeli SaaS Starter Kit Indonesia.
+Ikuti 4 langkah mudah di bawah ini untuk menjalankan sistem di laptop/komputer Anda dalam waktu kurang dari 5 menit.
+
+---
+
+## Langkah 1: Ekstrak File
+Ekstrak (unzip) file `saas-starter-qris-v1.0.0.zip` ke folder proyek Anda.
+Buka Terminal (Mac/Linux) atau Command Prompt / PowerShell (Windows), lalu masuk ke foldernya:
+
+  cd saas-starter-qris
+
+---
+
+## Langkah 2: Buat Virtual Environment & Install Dependensi
+Pastikan Python 3.9+ sudah terpasang di komputer Anda.
+
+Untuk Mac/Linux:
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r requirements.txt
+
+Untuk Windows:
+  python -m venv venv
+  venv\Scripts\activate
+  pip install -r requirements.txt
+
+---
+
+## Langkah 3: Konfigurasi File .env
+Salin file `.env.example` menjadi `.env`:
+  cp .env.example .env   (atau copy-paste manual di Windows)
+
+Buka file `.env` dengan text editor (VS Code, Notepad, dll) dan sesuaikan:
+- `SECRET_KEY`: Isi string acak bebas untuk keamanan sesi.
+- `PAKASIR_SLUG`: Nama project Anda di dashboard https://pakasir.id
+- `PAKASIR_API_KEY`: API key dari dashboard Pakasir.
+- `APP_URL`: URL aplikasi Anda (default lokal: http://localhost:5000)
+
+*Catatan: Jika belum mendaftar di Pakasir, Anda tetap bisa menjalankan dan mengetes aplikasi secara lokal menggunakan konfigurasi bawaan.*
+
+---
+
+## Langkah 4: Jalankan Aplikasi
+Ketik perintah:
+  python3 app.py   (atau `python app.py` di Windows)
+
+Buka browser dan akses:
+👉 http://localhost:5000
+
+Selamat! Halaman landing page, checkout, integrasi QRIS, dan dashboard member Anda sudah berjalan aktif!
+
+---
+
+## 📄 Ketentuan Lisensi
+- Lisensi Penggunaan: Bebas digunakan tanpa batas untuk keperluan proyek personal maupun proyek komersial klien Anda.
+- Hak Cipta: Anda bebas memodifikasi seluruh source code. Dilarang mendistribusikan atau menjual ulang source code mentah ini sebagai produk template di platform lain.
+
+Ada pertanyaan atau butuh bantuan?
+Hubungi kami via email: usnada@gmail.com
+Website: https://usnada.com
