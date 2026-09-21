@@ -12,6 +12,26 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-12345")
 
+# Support subpath routing (misal: /demo-saas/)
+class PrefixMiddleware:
+    def __init__(self, wsgi_app, prefix=""):
+        self.wsgi_app = wsgi_app
+        self.prefix = prefix
+
+    def __call__(self, environ, start_response):
+        prefix = environ.get("HTTP_X_FORWARDED_PREFIX") or self.prefix
+        if prefix:
+            environ["SCRIPT_NAME"] = prefix
+            path_info = environ.get("PATH_INFO", "")
+            if path_info.startswith(prefix):
+                environ["PATH_INFO"] = path_info[len(prefix):] or "/"
+        return self.wsgi_app(environ, start_response)
+
+app_prefix = os.environ.get("APP_PREFIX", "")
+if app_prefix or os.path.exists("/etc/systemd/system/saas-demo.service"):
+    # Default prefix untuk instance live demo
+    app.wsgi_app = PrefixMiddleware(app.wsgi_app, prefix=app_prefix or "/demo-saas")
+
 # Initialize database
 init_db()
 
