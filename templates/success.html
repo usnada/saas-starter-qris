@@ -1,13 +1,53 @@
 {% extends "base.html" %}
 
-{% block title %}Pembayaran Berhasil!{% endblock %}
+{% block title %}Status Pembayaran{% endblock %}
 
 {% block content %}
 <div class="checkout-container">
+    {% if order and order.status == 'completed' %}
+    <!-- Kondisi 1: PEMBAYARAN SUDAH LUNAS (Valid Webhook Verified) -->
     <div class="card success-card text-center">
         <div class="success-icon">🎉</div>
-        <h2>Pembayaran Berhasil!</h2>
-        <p class="subtitle">Terima kasih, akun Anda kini telah aktif dengan akses penuh.</p>
+        <h2>Pembayaran Berhasil Diverifikasi!</h2>
+        <p class="subtitle">Terima kasih! Tagihan Anda telah lunas dan file produk digital Anda siap diunduh.</p>
+
+        <div class="order-summary text-left">
+            <div class="summary-item">
+                <span>Order ID:</span>
+                <code>{{ order.order_id }}</code>
+            </div>
+            <div class="summary-item">
+                <span>Paket:</span>
+                <strong>{{ order.plan_name }}</strong>
+            </div>
+            <div class="summary-item">
+                <span>Metode Pembayaran:</span>
+                <strong>{{ (order.payment_method or 'QRIS')|upper }}</strong>
+            </div>
+            <div class="summary-item total">
+                <span>Total Bayar:</span>
+                <strong class="highlight-price">Rp {{ "{:,}".format(order.amount).replace(',', '.') }} (LUNAS)</strong>
+            </div>
+        </div>
+
+        <div class="mt-4 download-box">
+            <p style="margin-bottom: 12px; color: #94a3b8; font-size: 0.95rem;">Klik tombol di bawah untuk mengunduh Full Source Code:</p>
+            <a href="{{ url_for('download_file', order_id=order.order_id) }}" class="btn btn-primary btn-lg full-width">
+                📥 Unduh File Source Code (ZIP)
+            </a>
+        </div>
+
+        <div class="mt-4">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary full-width">Buka Dashboard Member &rarr;</a>
+        </div>
+    </div>
+
+    {% else %}
+    <!-- Kondisi 2: PEMBAYARAN BELUM LUNAS / MENUNGGU QRIS -->
+    <div class="card pending-card text-center">
+        <div class="pending-icon">⏳</div>
+        <h2>Menunggu Konfirmasi Pembayaran...</h2>
+        <p class="subtitle">Sistem sedang memverifikasi pembayaran QRIS Anda secara otomatis.</p>
 
         {% if order %}
         <div class="order-summary text-left">
@@ -20,15 +60,44 @@
                 <strong>{{ order.plan_name }}</strong>
             </div>
             <div class="summary-item">
-                <span>Status:</span>
-                <span class="badge badge-success">Lunas / Completed</span>
+                <span>Status Tagihan:</span>
+                <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4);">
+                    Menunggu Pembayaran (Pending)
+                </span>
+            </div>
+            <div class="summary-item total">
+                <span>Total Tagihan:</span>
+                <strong class="highlight-price">Rp {{ "{:,}".format(order.amount).replace(',', '.') }}</strong>
             </div>
         </div>
         {% endif %}
 
+        <div class="mt-4" style="background: #0f172a; padding: 15px; border-radius: 8px; border: 1px solid #334155;">
+            <p style="font-size: 0.9rem; color: #94a3b8;">
+                ⚠️ <b>Tombol Download Belum Terbuka:</b> File produk hanya dapat diunduh setelah notifikasi pembayaran masuk dari gateway Pakasir. Halaman ini akan mengecek status otomatis setiap beberapa detik.
+            </p>
+        </div>
+
         <div class="mt-4">
-            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Buka Dashboard Member &rarr;</a>
+            <button onclick="location.reload()" class="btn btn-secondary full-width">🔄 Refresh Cek Status Sekarang</button>
         </div>
     </div>
+
+    {% if order %}
+    <script>
+        // Auto-refresh cek pembayaran tiap 4 detik sampai status 'completed'
+        setInterval(function() {
+            fetch("{{ url_for('order_status', order_id=order.order_id) }}")
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === "completed") {
+                        window.location.reload();
+                    }
+                })
+                .catch(err => console.log(err));
+        }, 4000);
+    </script>
+    {% endif %}
+    {% endif %}
 </div>
 {% endblock %}

@@ -127,6 +127,29 @@ def payment_success():
     order = get_order(order_id) if order_id else None
     return render_template("success.html", order=order)
 
+@app.route("/download/<order_id>")
+def download_file(order_id):
+    """
+    Endpoint proteksi unduhan:
+    Hanya mengizinkan unduhan jika order_id benar-benar berstatus 'completed' (sudah lunas).
+    """
+    order = get_order(order_id)
+    if not order:
+        flash("Pesanan tidak ditemukan.", "danger")
+        return redirect(url_for("index"))
+        
+    if order["status"] != "completed":
+        flash("⛔ Pembayaran belum terkonfirmasi lunas. Silakan selesaikan pembayaran terlebih dahulu.", "warning")
+        return redirect(url_for("payment_success", order_id=order_id))
+        
+    # Kirim file zip produk
+    from flask import send_from_directory
+    projects_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    filename = "saas-starter-qris-v1.0.0.zip"
+    if not os.path.exists(os.path.join(projects_dir, filename)):
+        projects_dir = os.path.dirname(os.path.abspath(__file__))
+    return send_from_directory(projects_dir, filename, as_attachment=True)
+
 @app.route("/api/order-status/<order_id>")
 def order_status(order_id):
     order = get_order(order_id)
