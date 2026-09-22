@@ -90,8 +90,8 @@ def checkout(plan_id):
         app_url = os.environ.get("APP_URL", request.host_url.rstrip("/"))
         redirect_url = f"{app_url}/payment/success?order_id={order_id}"
         
-        # Dapatkan URL pembayaran Pakasir
-        checkout_url = get_pakasir_checkout_url(order_id, plan["price"], redirect_url)
+        # Dapatkan URL pembayaran Pakasir (langsung QRIS)
+        checkout_url = get_pakasir_checkout_url(order_id, plan["price"], redirect_url, qris_only=True)
         return redirect(checkout_url)
         
     return render_template("checkout.html", plan_id=plan_id, plan=plan)

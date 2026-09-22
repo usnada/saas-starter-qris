@@ -5,17 +5,19 @@ Dokumentasi: https://pakasir.id / https://app.pakasir.com
 import os
 import urllib.parse
 
-def get_pakasir_checkout_url(order_id, amount, redirect_url=None):
+def get_pakasir_checkout_url(order_id, amount, redirect_url=None, qris_only=True):
     """
     Menghasilkan URL pembayaran Pakasir resmi.
-    Format: https://app.pakasir.com/pay/{slug}/{amount}?order_id=...&redirect=...
+    Format: https://app.pakasir.com/pay/{slug}/{amount}?order_id=...&redirect=...&qris_only=1
     """
-    slug = os.environ.get("PAKASIR_SLUG", "demo-saas")
+    slug = os.environ.get("PAKASIR_SLUG", "puna_edu")
     base_url = os.environ.get("PAKASIR_BASE_URL", "https://app.pakasir.com/pay").rstrip("/")
     
     url = f"{base_url}/{slug}/{amount}?order_id={urllib.parse.quote(order_id)}"
     if redirect_url:
         url += f"&redirect={urllib.parse.quote(redirect_url)}"
+    if qris_only:
+        url += "&qris_only=1"
     return url
 
 def verify_pakasir_webhook(data):
