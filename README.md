@@ -56,7 +56,7 @@ saas-starter-qris/
 
 Anda bisa mendapatkan source code lengkap siap pakai, file `.env.example`, dan hak lisensi komersial seumur hidup:
 
-- 🇮🇩 **[Beli di Lynk.id (QRIS / Bank Transfer / E-Wallet)](https://lynk.id](http://lynk.id/usnada/olq85jz6wlk8/checkout)**
+- 🇮🇩 **[Beli di Lynk.id (QRIS / Bank Transfer / E-Wallet)](http://lynk.id/usnada/olq85jz6wlk8/checkout)**
 - 🌍 **[Beli di Payhip (PayPal / Kartu Kredit Global)](https://payhip.com/b/v5xRc)**
 
 *(File `.zip` langsung terkirim otomatis dan dapat diunduh seketika setelah pembayaran).*
